@@ -149,6 +149,13 @@
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+    .warning{
+        color: red;
+        width: 100%;
+        height: auto;
+        display: none;
+        justify-content: center;
+    }
 </style>
 
 <body>
@@ -156,6 +163,7 @@
         <input class="input" type="text" id="text" placeholder="write here...">
         <button class="button" onclick="setQuery()">Search profile</button>
     </header>
+    <div class="warning"><h1>ERR: USUARIO NO ENCONTRADO</h1></div>
     <main>
         <div class="card"></div>
     </main>
@@ -233,12 +241,19 @@
 
     async function getDataFromApi(query) {
         document.querySelector('main').classList.add('hidden');
+        const warningMsg = document.querySelector('.warning');
         var url = `https://api.github.com/users/${query}`;
 
         var miRespuesta = await fetch(url, { method: 'GET' }).then(function (response) {
             return response.json();
         });
-
+        if (miRespuesta.message == "Not Found" || miRespuesta == '') {
+            warningMsg.style.display = 'flex';
+            document.querySelector('.spinner-case').classList.add('hidden');
+            return;
+        } else {
+            warningMsg.style.display = 'none';
+  }
         document.querySelector('.spinner-case').classList.add('hidden');
         printCard(miRespuesta);
     }
