@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+
+<!-- 
+    author: @Oscar-Verdasco
+ -->
+
 <html>
     <head>
         <meta charset="utf-8">
@@ -215,7 +220,7 @@
         `;
         //comment
         document.querySelector('.card').innerHTML = card;
-        document.querySelector('.card').classList.remove('hidden');
+        document.querySelector('main').classList.remove('hidden');
     }
 
     function setQuery() {
@@ -223,10 +228,11 @@
         inputText = document.querySelector("#text");
         getDataFromApi(inputText.value);
         inputText.value="";
+
     }
 
     async function getDataFromApi(query) {
-        document.querySelector('.card').classList.add('hidden');
+        document.querySelector('main').classList.add('hidden');
         var url = `https://api.github.com/users/${query}`;
 
         var miRespuesta = await fetch(url, { method: 'GET' }).then(function (response) {
