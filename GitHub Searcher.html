@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+    </head>
+<style>
+    *{
+        box-sizing: border-box;
+        margin: 0;
+    }
+    body{
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 500;
+        font-size: 15px;
+        background-color: #e7e7e7;
+    }
+    header{
+        margin: 20px 0 15px 0;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        align-content: center;
+        justify-content: center;
+    }
+    main{
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: center;
+    }
+    a{
+        color: black;
+        font-weight: normal;
+        text-decoration: none;
+    }
+    a:hover{
+        color: blue;
+    }
+    .spinner-case {
+        display: block;
+        position: absolute;
+        top: 45%;
+        left: 47%;
+    }
+
+    .hidden {
+        display: none;
+    }
+    .card{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+        width: 313px;
+        height: auto;
+        padding: 7px;
+        border: 1px solid #7a8188;
+        border-radius: 5px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        background-color: white;
+    }
+    .name-bio{
+        width: 100%;
+        text-align: left;
+    }
+
+    .input{
+        padding-left: 10px;
+        height: 32px;
+        border: 1px solid rgb(148, 148, 148);
+        margin-right: 5px;
+    }
+    .button{
+        background-color: white;
+        color: black;
+        font-weight: 600;
+        height: 36px;
+        border: 1px black solid;
+    }
+    img{
+        border-radius: 150px;
+        margin-bottom: 10px;
+    }
+    .user-name{
+        font-weight: 700;
+        font-size: 20px;
+        margin-bottom: 0px;
+    }
+    .user{
+        font-weight: 400;
+        font-size: 17px;
+        color: #7a8188;
+        margin-bottom: 10px;
+    }
+    .bio{
+        margin-bottom: 20px;
+    }
+    .edit-button{
+        width: 100%;
+        height: 40px;
+        font-weight: 700;
+        cursor: pointer;
+        background-color: #f6f8fa;
+        border: 1px solid #daddde;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+    .followers{
+        font-size: 13px;
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 20px;
+    }
+    .sector{
+        font-size: 14px;
+        display: flex;
+        align-items: stretch;
+        margin-bottom: 5px;
+    }
+    .location{
+        font-size: 14px;
+        display: flex;
+        margin-bottom: 5px;
+    }
+    .email{
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+    .link{
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+        font-weight: 500 !important;
+    }
+    .hide-link{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+</style>
+
+<body>
+    <header>
+        <input class="input" type="text" id="text" placeholder="write here...">
+        <button class="button" onclick="setQuery()">Search profile</button>
+    </header>
+    <main>
+        <div class="card"></div>
+    </main>
+    <div class="spinner-case">
+        <svg width="80" height="80" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#0095ff">
+            <g fill="none" fill-rule="evenodd">
+                <g transform="translate(1 1)" stroke-width="2">
+                    <circle stroke-opacity=".5" cx="18" cy="18" r="18" />
+                    <path d="M36 18c0-9.94-8.06-18-18-18">
+                        <animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s"
+                            repeatCount="indefinite" />
+                    </path>
+                </g>
+            </g>
+        </svg>
+    </div>
+
+</body>
+<script>
+    
+    function printCard(user) {
+        let card = '';
+        if(user.company==null){
+            user.company='Información no disponible...';
+        } if (user.email==null){
+            user.email='Información no disponible...'
+        } if (user.bio==null){
+            user.bio='';
+        } if (user.location==null){
+            user.location='Información no disponible...'
+        } if (user.blog==null){
+            user.blog='Información no disponible...'
+        }
+        card = `
+            <div> <img src="${user.avatar_url}" width="293px" height="293px"> </div>  
+            <div class= name-bio>
+                <div class="user-name">${user.name}</div>
+                <div class="user">${user.login}</div>
+                <div class="bio">${user.bio}</div>
+                <div><a href="${user.html_url}"><button class="edit-button">Edit Profile</button></a></div>
+                <div class="followers">
+                    <svg text="muted" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-people"><path fill-rule="evenodd" d="M5.5 3.5a2 2 0 100 4 2 2 0 000-4zM2 5.5a3.5 3.5 0 115.898 2.549 5.507 5.507 0 013.034 4.084.75.75 0 11-1.482.235 4.001 4.001 0 00-7.9 0 .75.75 0 01-1.482-.236A5.507 5.507 0 013.102 8.05 3.49 3.49 0 012 5.5zM11 4a.75.75 0 100 1.5 1.5 1.5 0 01.666 2.844.75.75 0 00-.416.672v.352a.75.75 0 00.574.73c1.2.289 2.162 1.2 2.522 2.372a.75.75 0 101.434-.44 5.01 5.01 0 00-2.56-3.012A3 3 0 0011 4z"></path></svg> 
+                    <span style="margin-left: 5px;font-weight: 700;">${user.followers} <a href="${user.followers_url}">followers</a> · ${user.following} <a href="${user.followers_url}">following</a></span>                   
+                </div>
+                <div class="sector">
+                    <svg class="octicon octicon-organization" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 14.25c0 .138.112.25.25.25H4v-1.25a.75.75 0 01.75-.75h2.5a.75.75 0 01.75.75v1.25h2.25a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25h-8.5a.25.25 0 00-.25.25v12.5zM1.75 16A1.75 1.75 0 010 14.25V1.75C0 .784.784 0 1.75 0h8.5C11.216 0 12 .784 12 1.75v12.5c0 .085-.006.168-.018.25h2.268a.25.25 0 00.25-.25V8.285a.25.25 0 00-.111-.208l-1.055-.703a.75.75 0 11.832-1.248l1.055.703c.487.325.779.871.779 1.456v5.965A1.75 1.75 0 0114.25 16h-3.5a.75.75 0 01-.197-.026c-.099.017-.2.026-.303.026h-3a.75.75 0 01-.75-.75V14h-1v1.25a.75.75 0 01-.75.75h-3zM3 3.75A.75.75 0 013.75 3h.5a.75.75 0 010 1.5h-.5A.75.75 0 013 3.75zM3.75 6a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM3 9.75A.75.75 0 013.75 9h.5a.75.75 0 010 1.5h-.5A.75.75 0 013 9.75zM7.75 9a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM7 6.75A.75.75 0 017.75 6h.5a.75.75 0 010 1.5h-.5A.75.75 0 017 6.75zM7.75 3a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5z"></path></svg>
+                    <span style="margin-left: 5px;">${user.company}</span>
+                </div>
+                <div class="location">
+                    <svg class="octicon octicon-location" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M11.536 3.464a5 5 0 010 7.072L8 14.07l-3.536-3.535a5 5 0 117.072-7.072v.001zm1.06 8.132a6.5 6.5 0 10-9.192 0l3.535 3.536a1.5 1.5 0 002.122 0l3.535-3.536zM8 9a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+                    <span style="margin-left: 5px;">${user.location}</span>
+                </div>
+                <div class="email">
+                    <svg class="octicon octicon-mail" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M1.75 2A1.75 1.75 0 000 3.75v.736a.75.75 0 000 .027v7.737C0 13.216.784 14 1.75 14h12.5A1.75 1.75 0 0016 12.25v-8.5A1.75 1.75 0 0014.25 2H1.75zM14.5 4.07v-.32a.25.25 0 00-.25-.25H1.75a.25.25 0 00-.25.25v.32L8 7.88l6.5-3.81zm-13 1.74v6.441c0 .138.112.25.25.25h12.5a.25.25 0 00.25-.25V5.809L8.38 9.397a.75.75 0 01-.76 0L1.5 5.809z"></path></svg>
+                    <span style="margin-left: 5px;">${user.email}</span>
+                </div>
+                <div class="link">
+                    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-link"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg>
+                    <div class="hide-link"><span style="margin-left: 5px;"><a href="${user.blog}">${user.blog}</a></span></div>
+                </div>
+            </div>
+        `;
+        //comment
+        document.querySelector('.card').innerHTML = card;
+        document.querySelector('.card').classList.remove('hidden');
+    }
+
+    function setQuery() {
+        document.querySelector('.spinner-case').classList.remove('hidden');
+        inputText = document.querySelector("#text");
+        getDataFromApi(inputText.value);
+        inputText.value="";
+    }
+
+    async function getDataFromApi(query) {
+        document.querySelector('.card').classList.add('hidden');
+        var url = `https://api.github.com/users/${query}`;
+
+        var miRespuesta = await fetch(url, { method: 'GET' }).then(function (response) {
+            return response.json();
+        });
+
+        document.querySelector('.spinner-case').classList.add('hidden');
+        printCard(miRespuesta);
+    }
+
+    getDataFromApi('FOSKOTAR');
+    
+</script>
+
+</html>
